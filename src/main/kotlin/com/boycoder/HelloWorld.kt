@@ -75,9 +75,35 @@ enum class Operation(val value: String) {
     DIVI("/")
 }
 
-fun addString(left: String, right: String): String {
-    val result = left.toInt() + right.toInt()
-    return result.toString()
+
+fun addString(leftNum: String, rightNum: String): String {
+    // ①
+    val result = StringBuilder()
+    // ②
+    var leftIndex = leftNum.length - 1
+    var rightIndex = rightNum.length - 1
+    // ③
+    var carry = 0
+
+    // ④
+    while (leftIndex >= 0 || rightIndex >= 0) {
+        // ⑤
+        val leftVal = if (leftIndex >= 0) leftNum.get(leftIndex).digitToInt() else 0
+        val rightVal = if (rightIndex >= 0) rightNum.get(rightIndex).digitToInt() else 0
+        val sum = leftVal + rightVal + carry
+        // ⑥
+        carry = sum / 10
+        result.append(sum % 10)
+        leftIndex--
+        rightIndex--
+    }
+    // ⑦
+    if (carry != 0) {
+        result.append(carry)
+    }
+
+    // ⑧
+    return result.reverse().toString()
 }
 
 fun minusString(left: String, right: String ): String {
