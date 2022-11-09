@@ -2,19 +2,25 @@ package com.boycoder
 
 import kotlin.system.exitProcess
 
+
+val help = """
+    --------------------------------------
+    使用说明：
+1. 输入 1 + 1，按回车，即可使用计算器；
+2. 注意：数字与符号之间要有空格；
+3. 想要退出程序，
+请输入：exit--------------------------------------""".trimIndent()
 fun main() {
     while(true) {
         // 初始化
-        println("请输入标准的算式，并且按回车; \n" +
-                "比如：1 + 1，注意符合与数字之间要有空格。\n" +
-                "输入exit，退出程序。")
-        var input = readLine()
+        println(help)
+        val input = readLine()
         if (input == null) continue
         if (input == "exit") exitProcess(0)
 
-        var inputList = input.split(" ")
+        val inputList = input.split(" ")
 
-        var result = calculate(inputList)
+        val result = calculate(inputList)
 
         if (result == null) {
             println("输入格式不对")
@@ -28,16 +34,22 @@ fun main() {
 private fun calculate(inputList: List<String>): Int? {
     if (inputList.size != 3) return null
 
-    var left = inputList.get(0).toInt()
-    var operation = inputList.get(1)
-    var right = inputList.get(2).toInt()
+    val left = inputList.get(0).toInt()
+    val operation = Operation.valueOf(inputList[1])
+    val right = inputList.get(2).toInt()
 
-    when(operation) {
-        "+" -> return left + right
-        "-" -> return left - right
-        "*" -> return left * right
-        "/" -> return left/right
-        else -> return null
+    return when(operation) {
+        Operation.ADD -> left + right
+        Operation.MINUS -> left - right
+        Operation.MULTI -> left * right
+        Operation.DIVI -> left/right
     }
 
+}
+
+enum class Operation(val value: String) {
+    ADD("+"),
+    MINUS("-"),
+    MULTI("*"),
+    DIVI("/")
 }
