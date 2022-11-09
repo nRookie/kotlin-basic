@@ -180,6 +180,7 @@ fun main(args: Array<String>) {
 
     for (i in 6 downTo 0 step 2) { println(i)}
 
+    val (aLong, aString) = 42L to "Kotlin is awesome!"
     print(message)
     // Try adding program arguments via Run/Debug configuration.
     // Learn more about running applications: https://www.jetbrains.com/help/idea/running-applications.html.
